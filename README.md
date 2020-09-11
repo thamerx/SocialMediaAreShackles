@@ -14,11 +14,20 @@ You will find on the desktop
 Use it. it's gone. Get another one.
 
 
+
+
+
+
+
 *Note
  Shackled = all sites are accessible
  Free = block sites are inaccessible
 
 *Only "One note UWP" counts as the app that decreases the timer and gives you points
+
+
+
+
 
 
 uses AutoHotKey.
