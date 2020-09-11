@@ -19,7 +19,7 @@ Usage
 * run DeservedShackles.exe also add it to startup folder
 
 * Get a shackle
-* You will find on the desktop
+* You will find it on the desktop
 * Use it. it's gone. Get another one.
 
 
