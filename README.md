@@ -15,8 +15,9 @@ Usage
 * Compile both .ahk files
 
  
-* run shackled.exe first time only and only once to initiate 
-* run DeservedShackles.exe also add it to startup folder
+*Right click on shackled.exe Properties-> Compatibility -> check run as admin
+*Run shackled.exe first time only and only once to initiate
+*Run DeservedShackles.exe also add it to startup folder
 
 * Get a shackle
 * You will find it on the desktop
@@ -37,7 +38,7 @@ Usage
 
  Notes
 * Shackled = all sites are accessible
- Free = block sites are inaccessible
+* Free = block sites are inaccessible
 
 * Only "One note UWP" counts as the app that decreases the timer and gives you points
 
