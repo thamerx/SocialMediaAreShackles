@@ -1,5 +1,6 @@
 So Yeah, everyone hates to waste time on social media. This tool allows you to access social media only if have enough "shackles". you will only gain "shackles "if you get work done!  Does support games and blocks websites through the hosts file.
 
+*
 
 
 
@@ -21,7 +22,7 @@ Use it. it's gone. Get another one.
 
 
 
-
+*
 
 
 
@@ -38,8 +39,6 @@ Use it. it's gone. Get another one.
 
 *Only "One note UWP" counts as the app that decreases the timer and gives you points
 
+*
 
-*
-*
-***
-uses AutoHotKey.
+Uses AutoHotKey.
