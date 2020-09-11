@@ -8,7 +8,7 @@
 
 
 
-*Usage
+* Usage
 
 Compile both .ahk files
 
@@ -16,7 +16,7 @@ Compile both .ahk files
 run shackled.exe first time only and only once to initiate 
 run DeservedShackles.exe also add it to startup folder
 
-*Get a shackle
+* Get a shackle
 You will find on the desktop
 Use it. it's gone. Get another one.
 
@@ -33,12 +33,12 @@ Use it. it's gone. Get another one.
 
 
 
-*Note
+* Note
  Shackled = all sites are accessible
  Free = block sites are inaccessible
 
-*Only "One note UWP" counts as the app that decreases the timer and gives you points
+* Only "One note UWP" counts as the app that decreases the timer and gives you points
 
 
 
-*Uses AutoHotKey.
+* Uses AutoHotKey.
