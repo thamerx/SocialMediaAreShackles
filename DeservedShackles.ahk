@@ -16,34 +16,42 @@ allowedMinutes := 150
 
 ;endTime := A_Now
 ;endTime += %allowedMinutes%  , Minutes
+;WinSet, Transparent, N, ahk_class AutoHotkeyGUI 
 
+SetTitleMatchMode, 2
+
+;Winset, ExStyle, +0x20,  AutoHotkeyGUI 
 
 ;------------
-Gui,Points:+AlwaysOnTop +Disabled -SysMenu +Owner  ; +Owner avoids a taskbar button.
+Gui,Points:+AlwaysOnTop -Border +LastFound -SysMenu +Owner -Caption -ToolWindow +E0x08000020
 Gui Points:-Caption
 Gui Points:Font, s9 w30 c8000FF, Bookman Old Style
 Gui Points:Add, Text, x7 y0 h20 w55 center vpoints
 Gui,Points:Color, EEAA99
-
-
-
+WinSet, Transcolor, FFFFFF 
 ;----------
 
-Gui, Timer:+AlwaysOnTop +Disabled -SysMenu +Owner  ; +Owner avoids a taskbar button.
+;Gui, Timer:+AlwaysOnTop +Disabled -SysMenu +Owner  ; +Owner avoids a taskbar button.
+Gui, Timer:+AlwaysOnTop -Border +LastFound -SysMenu +Owner -Caption -ToolWindow +E0x08000020
 Gui Timer:-Caption
 Gui Timer:Font, s10.2 w30 c8000FF, Bookman Old Style
 Gui Timer:Add, Text, x7 y0 h20 w55 center vtime
 Gui, Timer:Color, EEAA99
+WinSet, Transcolor, FFFFFF
 ;GUI, Show, x860 y0 AutoSize, active
 
 
 
-SetTitleMatchMode, 2
 SetTimer TicTac, 1000
 ; Fallthrough
 
 	remainingTimeOneNoteDependent := allowedMinutes*60
 	remainingTime := allowedMinutes*60
+	
+	IniRead, remainingTimeOneNoteDependent, %A_WorkingDir%\points.ini:Stream:$DATA, tTime1, remainingTimeOneNoteDependent,%remainingTimeOneNoteDependent%
+	IniRead, remainingTime, %A_WorkingDir%\points.ini:Stream:$DATA, tTime2, remainingTime,%remainingTime%
+
+
 	
 	;EnvSub remainingTimeOneNoteDependent, %A_Now%, Seconds
 	;EnvSub remainingTime, %A_Now%, Seconds
@@ -77,6 +85,10 @@ TicTac:
 								points := points+1
 								lastTimePointsAdded := remainingTime
 								IniWrite, %points%, %A_WorkingDir%\points.ini:Stream:$DATA, Money, points
+								IniWrite, %remainingTimeOneNoteDependent%, %A_WorkingDir%\points.ini:Stream:$DATA, tTime, remainingTimeOneNoteDependent
+								IniWrite, %remainingTime%, %A_WorkingDir%\points.ini:Stream:$DATA, tTime, remainingTime
+
+
 								
 
 				}
@@ -109,6 +121,8 @@ TicTac:
 
 								lastTimePointsAdded := remainingTime
 								IniWrite, %points%, %A_WorkingDir%\points.ini:Stream:$DATA, Money, points
+								IniWrite, %remainingTimeOneNoteDependent%, %A_WorkingDir%\points.ini:Stream:$DATA, tTime1, remainingTimeOneNoteDependent
+								IniWrite, %remainingTime%, %A_WorkingDir%\points.ini:Stream:$DATA, tTime2, remainingTime
 								SetTimer, closeGames, -5
 								
 								;remainingTime := remainingTimeOneNoteDependent ;i'm sorry gotta do so
@@ -181,8 +195,8 @@ guiShown := false
 
 	If !guiShown
 	{
-		GUI, Timer:Show, x860 y0 AutoSize, active
-		GUI, Points:Show, x1835 y0 AutoSize, active
+		GUI, Timer:Show, x860 y0 AutoSize NA
+		GUI, Points:Show, x1835 y0 AutoSize NA
 		guiShown := true
 	}
 		else

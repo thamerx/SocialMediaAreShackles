@@ -3,6 +3,40 @@
 #singleinstance force
 
 
+;----------------
+
+			; Register a function to be called on exit:
+			OnExit("ExitFunc")
+
+			; Register an object to be called on exit:
+			OnExit(ObjBindMethod(MyObject, "Exiting"))
+
+			ExitFunc(ExitReason, ExitCode)
+			{
+				if ExitReason not in Logoff,Shutdown
+				{
+					MsgBox, 4, , Are you sure you want to exit?
+					IfMsgBox, No
+						return 1  ; OnExit functions must return non-zero to prevent exit.
+				}
+				;SetTimer, returntoshakle, -1
+				; Do not call ExitApp -- that would prevent other OnExit functions from being called.
+			}
+
+			class MyObject
+			{
+				Exiting()
+				{
+						FileDelete, C:\Windows\System32\Drivers\etc\hosts
+						FileCopy, %A_WorkingDir%\free\hosts, C:\Windows\System32\Drivers\etc
+						Run cmd /c ipconfig /flushdns
+						returntoshakle()
+						msgbox done
+					
+				}
+			}
+;----------------
+
 
 SendMode Input
 SetWorkingDir %A_ScriptDir%
@@ -25,12 +59,15 @@ endTime := A_Now
 endTime += %allowedMinutes%, Minutes
 
 
-Gui, +AlwaysOnTop +Disabled -SysMenu +Owner
+Gui, +AlwaysOnTop -Border +LastFound -SysMenu +Owner -Caption -ToolWindow +E0x08000020
 Gui -Caption
 Gui Font, s10.2 w30 c8000FF, Bookman Old Style
 Gui Add, Text, x7 y0 h20 w35 center vtime
 Gui, Color, EEAA99
-GUI, Show, x860 y0 AutoSize, active
+WinSet, Transcolor, FFFFFF 
+
+
+GUI, Show, x860 y0 AutoSize NA
 guiShown := true
 
 SetTimer TicTac, 1000
@@ -48,15 +85,12 @@ SetTimer TicTac, 1000
 				GuiControl, , time, %displayedTime%
 					if(remainingTime<0)
 					{
-						SetTimer, returntoshakle, -5
+						returntoshakle()
+
 					}
 			Return
 			
 			
-GuiClose:
-FileDelete, C:\Windows\System32\Drivers\etc\hosts
-FileCopy, %A_WorkingDir%\free\hosts, C:\Windows\System32\Drivers\etc
-Run cmd /c ipconfig /flushdns
 
 
 
@@ -65,7 +99,7 @@ Run cmd /c ipconfig /flushdns
 
 	If !guiShown
 	{
-		GUI, Show, x860 y0 AutoSize, active
+		GUI, Show, x860 y0 AutoSize NA
 		guiShown := true
 	}
 		else
@@ -78,7 +112,7 @@ Run cmd /c ipconfig /flushdns
 ;---------------
 
 
-ExitApp
+
 Format2Digits(_val)
 {
 _val += 100
@@ -87,7 +121,8 @@ Return _val
 }
 
 
-returntoshakle:
+returntoshakle()
+{
 	SetTimer TicTac, off
 	GuiControl, , time, DONE!
 	send {f5}
@@ -96,34 +131,12 @@ returntoshakle:
 	FileCopy, %A_WorkingDir%\free\hosts, C:\Windows\System32\Drivers\etc
 	Run cmd /c ipconfig /flushdns
 	Install_Path = %A_Desktop%\Shackles
-	Run chrome.exe
-	sleep 200
-	sendraw chrome://net-internals/#dns
-	sleep 200
-	send {enter}
-	sleep 200
-	send {tab}
-	sleep 30
-	send {tab}
-	sleep 30
-	send {tab}
-	sleep 30
-	send {tab}
-	sleep 30
-	send {tab}
-	sleep 30
-	send {tab}
-	sleep 30
-	send {enter}
-	sleep 30
-	Sendinput {LCtrl down}
-	Sendinput w
-	Sendinput {LCtrl up}
-	sleep 400
+
+	sleep 500
 	;-----
 	send {f5}
 	sleep 2000
-	MsgBox,,shackle used, Sorry, shackle was used hollow.
+	MsgBox,,Shackle used, Sorry, shackle was used hollow.
 	FileMove, %A_ScriptName%, C:\Temp
 	FileRemoveDir, %Install_Path%\, 1
 	Sleep, 1000
@@ -131,4 +144,5 @@ returntoshakle:
 	Run, %comspec% /c del %RemoveSelf% /q,,hide
 	FileCreateDir, %Install_Path%\
 	ExitApp
-return
+return null
+}
